@@ -10,6 +10,7 @@ import {DeviceSize, deviceSize} from '../../utils/breakpoints';
 type CustomStyleSheet = {
   imageStyle: ViewStyle;
   buttonStyle: ViewStyle;
+  buttonTextStyle: TextStyle;
   buttonPressedStyle: ViewStyle;
   loadingAnimationStyle: TextStyle;
   cameraButtonStyle: ViewStyle;
@@ -61,6 +62,13 @@ export function useStyles() {
       backgroundColor: theme.colors.green,
       padding: isMobile ? mobilePadding : 10,
       borderRadius: 5,
+    },
+    buttonTextStyle: {
+      color: theme.colors.textDarkGrey,
+      // fontFamily: 'Roboto',
+      // fontSize: 15,
+      // fontWeight: '500',
+      // textTransform: 'uppercase',
     },
     buttonPressedStyle: {
       backgroundColor: theme.colors.green,
@@ -115,7 +123,9 @@ export function useStyles() {
     },
     homeScreenContainerStyle: {
       backgroundColor: theme.colors.background,
-      padding: isMobile ? mobilePadding : 20,
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     footerNavigationStyle: {
       backgroundColor: theme.colors.footerBackground,

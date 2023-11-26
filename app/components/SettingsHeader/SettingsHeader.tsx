@@ -1,9 +1,10 @@
 import React, {useState, useContext} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {View, TouchableOpacity, Text, Modal} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Import FontAwesome
 
 import {useTranslation} from 'react-i18next';
 import {SettingsContext} from '../SettingsContextProvider/SettingsContextProvider';
-import LanguageMenu from '../LanguageMenu/LanguageMenu'; // Import your language menu component
+import LanguageMenu from '../LanguageMenu/LanguageMenu';
 import {useStyles} from './SettingsHeader.styles';
 
 export function SettingsHeader() {
@@ -18,21 +19,37 @@ export function SettingsHeader() {
 
   const handleLanguageChange = (lang: string) => {
     context.setLanguage(lang);
-    setIsLanguageMenuVisible(false); // Close menu after selection
+    setIsLanguageMenuVisible(false);
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.text}>{t('settingsHeader.settings')}</Text>
       <TouchableOpacity
+        style={styles.iconContainer}
         onPress={() => {
           return setIsLanguageMenuVisible(!isLanguageMenuVisible);
         }}>
-        <Text>{t('settingsHeader.change_language')}</Text>
+        <Icon name="language" size={styles.text.fontSize} color="#000" />
       </TouchableOpacity>
-      {isLanguageMenuVisible && (
-        <LanguageMenu onLanguageChange={handleLanguageChange} />
-      )}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isLanguageMenuVisible}
+        onRequestClose={() => {
+          setIsLanguageMenuVisible(!isLanguageMenuVisible);
+        }}>
+        <View style={styles.modalView}>
+          <LanguageMenu onLanguageChange={handleLanguageChange} />
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => {
+              return setIsLanguageMenuVisible(false);
+            }}>
+            <Text style={styles.closeButtonText}>X</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   );
 }
