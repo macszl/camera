@@ -1,0 +1,8 @@
+{
+  "selectFileButton": "Załaduj plik",
+  "openCameraButton": "Otwórz aparat",
+  "sendFileButton": "Wyślij plik",
+  "errorSendingPhotoToApi": "Błąd wysyłania zdjęcia do API",
+  "errorSelectingFile": "Proszę wybrać plik",
+  "errorPickingDocument": "Błąd wybierania pliku"
+}

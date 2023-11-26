@@ -1,0 +1,10 @@
+/node_modules/*
+/android/*
+/ios/*
+/dist/*
+/app/generated/*
+/app/types/*
+metro.config.js
+jest.config.js
+index.js
+babel.config.js
