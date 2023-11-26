@@ -1,3 +1,5 @@
 {
-  "welcomeMessage": "Welcome to the food image classification app! Here you can select a photo from the gallery or take a photo with the camera and send it for classification."
+  "welcomeMessageHeading": "Welcome to FoodDetect!",
+  "welcomeMessageDescription": "Here you can select a photo from the gallery or take a photo with the camera and send it for classification.",
+  "continueButton": "Continue"
 }

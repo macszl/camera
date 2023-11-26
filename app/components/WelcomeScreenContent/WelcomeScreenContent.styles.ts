@@ -5,24 +5,45 @@ export function useStyles() {
   const {theme} = useTheme();
 
   return StyleSheet.create({
-    content: {
+    container: {
       flex: 1,
+      width: '80%',
+      flexDirection: 'column',
       justifyContent: 'center',
+    },
+    textGroup: {
+      marginBottom: '20%', // Adjusts the space between the text group and the button
+    },
+    heading: {
+      fontSize: 24, // Replace with appropriate font size
+      fontWeight: '700', // Replace with appropriate font weight
+      fontFamily: 'Roboto', // Ensure Inter font is linked
+      textAlign: 'left',
+    },
+    description: {
+      fontSize: 16, // Replace with appropriate font size
+      fontFamily: 'Inter', // Ensure Inter font is linked
+      textAlign: 'left',
+      flexShrink: 1,
+      flexWrap: 'wrap',
+    },
+    touchableButton: {
+      backgroundColor: 'green',
+      padding: 10,
       alignItems: 'center',
-      padding: 20,
-      backgroundColor: theme.colors.background, // Example background color
+      justifyContent: 'center',
     },
-    text: {
+    disabledButton: {
+      backgroundColor: 'green',
+      padding: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      opacity: 0.5,
+    },
+    buttonText: {
+      fontFamily: 'Inter', // Ensure Inter font is linked
+      color: 'white', // Assuming a white text color for the button, adjust as needed
       fontSize: 20,
-      fontWeight: 'bold',
-      marginBottom: 20,
-      color: theme.colors.textDarkGrey, // Example text color
-    },
-    button: {
-      paddingHorizontal: 20,
-      paddingVertical: 10,
-      backgroundColor: theme.colors.primary, // Example button background color
-      borderRadius: 5,
     },
   });
 }

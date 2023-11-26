@@ -51,7 +51,7 @@ export function useStyles() {
       color: 'black', // Color of the 'X' text
     },
     iconContainer: {
-      paddingHorizontal: 5,
+      padding: 5,
     },
   });
 }

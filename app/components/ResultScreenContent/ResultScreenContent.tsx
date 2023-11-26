@@ -1,47 +1,62 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, FlatList} from 'react-native';
-import {useNavigation, useTheme} from '@react-navigation/native';
+import React, {useContext} from 'react';
+import {View, Text, FlatList, Image} from 'react-native';
 import {useStyles} from '../../components/Common/Common.styles';
-import {
-  SettingsContext,
-  appStorage,
-} from '../SettingsContextProvider/SettingsContextProvider'; // Import SettingsContext
+import {SettingsContext} from '../SettingsContextProvider/SettingsContextProvider';
 import {useTranslation} from 'react-i18next';
-import {ResultStackNavigationProp} from '../../types/navigation.types';
-import {Button} from '@rneui/themed';
 
 export function ResultScreenContent() {
   const styles = useStyles();
-  const navigation = useNavigation<ResultStackNavigationProp>();
   const {t} = useTranslation();
   const settingsContext = useContext(SettingsContext);
-  const [classifications, setClassifications] = useState([]);
 
-  useEffect(() => {
-    // Load classifications from MMKV storage
-    const storedClassifications = appStorage.getString('classifications');
-    if (storedClassifications) {
-      setClassifications(JSON.parse(storedClassifications));
-    }
-  }, []);
+  //Load classifications from the settingsContext
+  if (settingsContext === null) {
+    throw new Error('Something went wrong with SettingsContext');
+  }
+
+  const {classifications} = settingsContext;
 
   return (
     <View style={styles.historyScreenContainerStyle}>
-      <Text style={styles.historyScreenWelcomeMessageStyle}>{t('welcome_message')}</Text>
-      <Button
-        title={t('navigate_to_main_menu')}
-        onPress={() => navigation.navigate('MainMenu')}
-        style={styles.buttonStyle}
-      />
+      <Text style={styles.historyScreenWelcomeMessageStyle}>
+        {t('result.resultWelcomeMessage')}
+      </Text>
       <FlatList
         data={classifications}
-        renderItem={({item}) => (
-          <View style={styles.historyListItemStyle}>
-            <Text style={styles.historyListItemTextStyle}>{item.result}</Text>{' '}
-            {/* Example property */}
-          </View>
-        )}
-        keyExtractor={(item, index) => index.toString()}
+        renderItem={({item}) => {
+          return (
+            <View
+              style={[
+                styles.historyListItemStyle,
+                {flexDirection: 'row', alignItems: 'center'},
+              ]}>
+              <Image
+                source={{uri: item.image}}
+                style={{width: '30%', height: 100, resizeMode: 'contain'}}
+              />
+              <View style={{width: '5%'}} /> {/* Divider */}
+              <View style={{width: '65%'}}>
+                <Text
+                  style={[
+                    styles.historyListItemTextStyle,
+                    {fontWeight: 'bold'},
+                  ]}>
+                  {t('result.classificationResult')}
+                </Text>
+                <Text style={styles.historyListItemTextStyle}>
+                  {item.result}
+                </Text>
+                <Text style={styles.historyListItemTextStyle}>
+                  {item.image.split('/').pop()}{' '}
+                  {/* Extracting filename from the path */}
+                </Text>
+              </View>
+            </View>
+          );
+        }}
+        keyExtractor={(item, index) => {
+          return index.toString();
+        }}
       />
     </View>
   );

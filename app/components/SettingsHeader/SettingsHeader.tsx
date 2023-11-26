@@ -27,6 +27,7 @@ export function SettingsHeader() {
       <Text style={styles.text}>{t('settingsHeader.settings')}</Text>
       <TouchableOpacity
         style={styles.iconContainer}
+        hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
         onPress={() => {
           return setIsLanguageMenuVisible(!isLanguageMenuVisible);
         }}>

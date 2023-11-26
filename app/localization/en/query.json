@@ -2,6 +2,7 @@
   "selectFileButton": "Select file",
   "openCameraButton": "Open camera",
   "sendFileButton": "Send file",
+  "selectedFileLabel": "Selected file",
   "errorSendingPhotoToApi": "Error sending photo to API",
   "errorSelectingFile": "Please select a file",
   "errorPickingDocument": "Error picking document"

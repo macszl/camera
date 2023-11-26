@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, Button, Platform} from 'react-native';
+import {View, Text, Button, Platform, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 import DocumentPicker, {
   DocumentPickerResponse,
@@ -11,6 +11,7 @@ import {
   useCameraDevice,
 } from 'react-native-vision-camera';
 import {useTranslation} from 'react-i18next';
+import {useStyles} from '../WelcomeScreenContent/WelcomeScreenContent.styles';
 
 export function QueryScreenContent() {
   const [selectedPickerResponse, setSelectedPickerResponse] =
@@ -18,6 +19,7 @@ export function QueryScreenContent() {
   const [error, setError] = useState<string | null>(null);
   const camera = useRef<Camera>(null);
   const device = useCameraDevice('back');
+  const styles = useStyles();
 
   const [showCamera, setShowCamera] = useState(false);
   const {t} = useTranslation();
@@ -108,26 +110,33 @@ export function QueryScreenContent() {
   };
 
   return (
-    <View>
-      {error && <Text style={{color: 'red'}}>{error}</Text>}
-      <Button title="Select file" onPress={pickDocument} />
-      <Button title="Open camera" onPress={openCamera} />
-      {selectedPickerResponse && (
-        <Text>Selected File: {selectedPickerResponse.name}</Text>
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.touchableButton} onPress={pickDocument}>
+        <Text style={styles.buttonText}> {t('query.selectFileButton')} </Text>
+      </TouchableOpacity>
+      <View style={{width: '100%', height: '10%'}}></View>
+      <TouchableOpacity style={styles.touchableButton} onPress={openCamera}>
+        <Text style={styles.buttonText}>{t('query.openCameraButton')}</Text>
+      </TouchableOpacity>
+      <View style={{width: '100%', height: '10%'}}></View>
+      {selectedPickerResponse && selectedPickerResponse.name && (
+        <Text>
+          {`${t('query.selectedFileLabel')}: ${selectedPickerResponse.name}`}
+        </Text>
       )}
-      <Button
+      <TouchableOpacity
         disabled={!selectedPickerResponse}
-        onPress={handleSubmit}
-        title="Wyślij zdjęcie"
-      />
-      {error && <Text>Error: {error}</Text>}
+        style={
+          !selectedPickerResponse
+            ? styles.disabledButton
+            : styles.touchableButton
+        }
+        onPress={handleSubmit}>
+        <Text style={styles.buttonText}>{t('query.sendFileButton')}</Text>
+      </TouchableOpacity>
+      {error && <Text>{error}</Text>}
       {showCamera && device && (
-        <Camera
-          ref={camera}
-          style={{flex: 1}}
-          device={device}
-          isActive={showCamera}
-        />
+        <Camera ref={camera} device={device} isActive={showCamera} />
       )}
     </View>
   );

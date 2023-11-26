@@ -2,6 +2,7 @@
   "selectFileButton": "Załaduj plik",
   "openCameraButton": "Otwórz aparat",
   "sendFileButton": "Wyślij plik",
+  "selectedFileLabel": "Plik",
   "errorSendingPhotoToApi": "Błąd wysyłania zdjęcia do API",
   "errorSelectingFile": "Proszę wybrać plik",
   "errorPickingDocument": "Błąd wybierania pliku"

@@ -1,11 +1,10 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useStyles} from '../../components/Common/Common.styles';
-import {useTheme} from '@rneui/themed';
+import {useStyles} from '../../components/WelcomeScreenContent/WelcomeScreenContent.styles';
 import {useTranslation} from 'react-i18next';
 import {MainMenuStackNavigationProp} from '../../types/navigation.types';
-import {CustomButton} from '../CustomButton/CustomButton';
+import {TouchableOpacity} from 'react-native';
 
 export function MainMenuScreenContent() {
   const navigation = useNavigation<MainMenuStackNavigationProp>();
@@ -13,20 +12,23 @@ export function MainMenuScreenContent() {
   const {t} = useTranslation();
 
   return (
-    <View style={styles.homeScreenContainerStyle}>
+    <View style={styles.container}>
       {/* Use styles for the buttons */}
-      <CustomButton
-        title={t('mainMenu.resultButton')} // Assuming you use t function for translations
+      <TouchableOpacity
+        style={styles.touchableButton}
         onPress={() => {
           return navigation.navigate('Result');
-        }}
-      />
-      <CustomButton
-        title={t('mainMenu.queryButton')} // Translation function for the button title
+        }}>
+        <Text style={styles.buttonText}>{t('mainMenu.resultButton')}</Text>
+      </TouchableOpacity>
+      <View style={{width: '100%', height: '10%'}}></View>
+      <TouchableOpacity
+        style={styles.touchableButton}
         onPress={() => {
           return navigation.navigate('Query');
-        }}
-      />
+        }}>
+        <Text style={styles.buttonText}>{t('mainMenu.queryButton')}</Text>
+      </TouchableOpacity>
     </View>
   );
 }
