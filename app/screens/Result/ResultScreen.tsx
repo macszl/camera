@@ -5,6 +5,7 @@ import {ThemeProvider, useTheme} from '@rneui/themed';
 import {View} from 'react-native';
 import {useStyles} from '../../components/Common/Common.styles';
 import {SettingsHeader} from '../../components/SettingsHeader/SettingsHeader';
+import { ResultScreenContent } from '../../components/ResultScreenContent/ResultScreenContent';
 
 export default function ResultScreen() {
   const {theme} = useTheme();
@@ -14,8 +15,8 @@ export default function ResultScreen() {
     <ThemeProvider theme={theme}>
       <View style={styles.homeScreenContainerStyle}>
         <SettingsHeader />
-        <QueryScreenContent />
-        <ResultScreenNavigationFooter />
+        <ResultScreenContent/>
+        {/* <ResultScreenNavigationFooter /> */}
       </View>
     </ThemeProvider>
   );

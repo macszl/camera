@@ -15,7 +15,7 @@ export default function QueryScreen() {
       <View style={styles.homeScreenContainerStyle}>
         <SettingsHeader />
         <QueryScreenContent />
-        <QueryScreenNavigationFooter />
+        {/* <QueryScreenNavigationFooter /> */}
       </View>
     </ThemeProvider>
   );

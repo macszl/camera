@@ -32,6 +32,8 @@ type CustomStyleSheet = {
   userProfileIconStyle: ViewStyle;
   logoutButtonStyle: ViewStyle;
   welcomeBannerStyle: TextStyle;
+  historyScreenWelcomeMessageStyle: TextStyle
+  historyListItemTextStyle: TextStyle
 };
 
 export function useStyles() {
@@ -177,6 +179,19 @@ export function useStyles() {
       backgroundColor: theme.colors.bannerBackground,
       padding: isMobile ? mobilePadding : 20,
       textAlign: 'center',
+    },
+    historyScreenWelcomeMessageStyle: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: theme.colors.primaryFont,
+      padding: 10,
+      // Add other styling as needed
+    },
+    historyListItemTextStyle: {
+      fontSize: 16,
+      color: theme.colors.secondaryFont,
+      padding: 5,
+      // Add other styling as needed
     },
   });
 }
