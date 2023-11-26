@@ -1,4 +1,5 @@
 import React from 'react';
+import './app/localization/i18n';
 import {SettingsContextProvider} from './app/components/SettingsContextProvider/SettingsContextProvider';
 import {theme} from './app/styles/theme';
 import {RootNavigator} from './app/navigation/RootNavigator';

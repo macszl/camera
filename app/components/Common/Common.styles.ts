@@ -100,7 +100,7 @@ export function useStyles() {
       color: theme.colors.primary,
     },
     classificationResultStyle: {
-      color: theme.colors.primaryFont, // Replaced textColor with color
+      color: theme.colors.textDarkGrey, // Replaced textColor with color
       backgroundColor: theme.colors.background,
       padding: isMobile ? mobilePadding : 15,
     },
@@ -188,7 +188,7 @@ export function useStyles() {
     historyScreenWelcomeMessageStyle: {
       fontSize: 20,
       fontWeight: 'bold',
-      color: theme.colors.primaryFont,
+      color: theme.colors.textDarkGrey,
       padding: 10,
       // Add other styling as needed
     },

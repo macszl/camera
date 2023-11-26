@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "camera.app"
-               BlueprintName = "camera"
-               ReferencedContainer = "container:camera.xcodeproj">
+               BuildableName = "FoodDetect.app"
+               BlueprintName = "FoodDetect"
+               ReferencedContainer = "container:FoodDetect.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "cameraTests.xctest"
-               BlueprintName = "cameraTests"
-               ReferencedContainer = "container:camera.xcodeproj">
+               BuildableName = "FoodDetectTests.xctest"
+               BlueprintName = "FoodDetectTests"
+               ReferencedContainer = "container:FoodDetect.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "camera.app"
-            BlueprintName = "camera"
-            ReferencedContainer = "container:camera.xcodeproj">
+            BuildableName = "FoodDetect.app"
+            BlueprintName = "FoodDetect"
+            ReferencedContainer = "container:FoodDetect.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "camera.app"
-            BlueprintName = "camera"
-            ReferencedContainer = "container:camera.xcodeproj">
+            BuildableName = "FoodDetect.app"
+            BlueprintName = "FoodDetect"
+            ReferencedContainer = "container:FoodDetect.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -13,7 +13,7 @@ export function SettingsHeader() {
   const [isLanguageMenuVisible, setIsLanguageMenuVisible] = useState(false);
 
   if (!context) {
-    throw new Error('Something went wrong with AuthenticationModalContext');
+    throw new Error('Something went wrong with SettingsContext');
   }
 
   const handleLanguageChange = (lang: string) => {
@@ -23,10 +23,12 @@ export function SettingsHeader() {
 
   return (
     <View>
-      <Text style={styles.text}>{t('settings')}</Text>
+      <Text style={styles.text}>{t('settingsHeader.settings')}</Text>
       <TouchableOpacity
-        onPress={() => setIsLanguageMenuVisible(!isLanguageMenuVisible)}>
-        <Text>{t('change_language')}</Text>
+        onPress={() => {
+          return setIsLanguageMenuVisible(!isLanguageMenuVisible);
+        }}>
+        <Text>{t('settingsHeader.change_language')}</Text>
       </TouchableOpacity>
       {isLanguageMenuVisible && (
         <LanguageMenu onLanguageChange={handleLanguageChange} />
