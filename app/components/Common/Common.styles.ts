@@ -1,6 +1,11 @@
-import { StyleSheet, TextStyle, ViewStyle, useWindowDimensions } from 'react-native';
-import { useTheme } from '@rneui/themed';
-import { DeviceSize, deviceSize } from '../../utils/breakpoints';
+import {
+  StyleSheet,
+  TextStyle,
+  ViewStyle,
+  useWindowDimensions,
+} from 'react-native';
+import {useTheme} from '@rneui/themed';
+import {DeviceSize, deviceSize} from '../../utils/breakpoints';
 
 type CustomStyleSheet = {
   imageStyle: ViewStyle;
@@ -32,13 +37,13 @@ type CustomStyleSheet = {
   userProfileIconStyle: ViewStyle;
   logoutButtonStyle: ViewStyle;
   welcomeBannerStyle: TextStyle;
-  historyScreenWelcomeMessageStyle: TextStyle
-  historyListItemTextStyle: TextStyle
+  historyScreenWelcomeMessageStyle: TextStyle;
+  historyListItemTextStyle: TextStyle;
 };
 
 export function useStyles() {
-  const { theme } = useTheme();
-  const { width } = useWindowDimensions();
+  const {theme} = useTheme();
+  const {width} = useWindowDimensions();
   const isMobile = deviceSize(width) === DeviceSize.Small;
   const mobilePadding = 0;
   const nonMobilePadding = 20;
@@ -48,7 +53,7 @@ export function useStyles() {
       resizeMode: 'cover',
       backgroundColor: theme.colors.lightGrey,
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 4 },
+      shadowOffset: {width: 0, height: 4},
       shadowOpacity: 0.1,
       shadowRadius: 8,
     },
@@ -62,7 +67,7 @@ export function useStyles() {
       padding: isMobile ? mobilePadding : 10,
       borderRadius: 5,
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
+      shadowOffset: {width: 0, height: 2},
       shadowOpacity: 0.2,
       shadowRadius: 4,
     },

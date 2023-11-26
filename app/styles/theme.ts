@@ -65,4 +65,6 @@ export const theme = createTheme({
     bannerBackground: '#f8f9fa',
     bannerText: '#343a40',
   },
+  mode: 'light', // or 'dark'
 });
+console.log('Created Theme:', theme);
