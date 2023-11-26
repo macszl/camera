@@ -1,4 +1,5 @@
 {
     "resultWelcomeMessage": "Last results",
-    "classificationResult": "Classification result"
+    "classificationResult": "Result",
+    "filename": "Filename"
 }

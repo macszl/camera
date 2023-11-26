@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
-import {View, Text, FlatList, Image} from 'react-native';
-import {useStyles} from '../../components/Common/Common.styles';
+import {View, Text, FlatList, Image, Platform} from 'react-native';
+import {useStyles} from '../../components/WelcomeScreenContent/WelcomeScreenContent.styles';
 import {SettingsContext} from '../SettingsContextProvider/SettingsContextProvider';
 import {useTranslation} from 'react-i18next';
 
@@ -15,40 +15,50 @@ export function ResultScreenContent() {
   }
 
   const {classifications} = settingsContext;
-
   return (
-    <View style={styles.historyScreenContainerStyle}>
-      <Text style={styles.historyScreenWelcomeMessageStyle}>
-        {t('result.resultWelcomeMessage')}
-      </Text>
+    <View style={styles.container}>
+      <Text style={styles.heading}>{t('result.resultWelcomeMessage')}</Text>
       <FlatList
         data={classifications}
         renderItem={({item}) => {
           return (
-            <View
-              style={[
-                styles.historyListItemStyle,
-                {flexDirection: 'row', alignItems: 'center'},
-              ]}>
+            <View style={styles.historyListItemStyle}>
               <Image
-                source={{uri: item.image}}
+                source={{
+                  uri: `${Platform.OS === 'android' ? 'file://' : ''}${
+                    item.image
+                  }`,
+                }}
                 style={{width: '30%', height: 100, resizeMode: 'contain'}}
               />
-              <View style={{width: '5%'}} /> {/* Divider */}
-              <View style={{width: '65%'}}>
+              <View style={{width: '20%'}} />
+              <View
+                style={{
+                  width: '50%',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                }}>
                 <Text
                   style={[
                     styles.historyListItemTextStyle,
                     {fontWeight: 'bold'},
                   ]}>
-                  {t('result.classificationResult')}
+                  {t('result.classificationResult')}:
                 </Text>
                 <Text style={styles.historyListItemTextStyle}>
                   {item.result}
                 </Text>
+
+                <Text
+                  style={[
+                    styles.historyListItemTextStyle,
+                    {fontWeight: 'bold'},
+                  ]}>
+                  {t('result.filename')}:
+                </Text>
+
                 <Text style={styles.historyListItemTextStyle}>
-                  {item.image.split('/').pop()}{' '}
-                  {/* Extracting filename from the path */}
+                  {item.image.split('/').pop()}
                 </Text>
               </View>
             </View>

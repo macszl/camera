@@ -17,7 +17,7 @@ export function useStyles() {
     heading: {
       fontSize: 24, // Replace with appropriate font size
       fontWeight: '700', // Replace with appropriate font weight
-      fontFamily: 'Roboto', // Ensure Inter font is linked
+      fontFamily: 'Inter', // Ensure Inter font is linked
       textAlign: 'left',
     },
     description: {
@@ -44,6 +44,35 @@ export function useStyles() {
       fontFamily: 'Inter', // Ensure Inter font is linked
       color: 'white', // Assuming a white text color for the button, adjust as needed
       fontSize: 20,
+    },
+    historyScreenWelcomeMessageStyle: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: theme.colors.textDarkGrey, // Use theme colors for text
+      marginBottom: 20,
+    },
+    historyListItemStyle: {
+      backgroundColor: '#E0E0E0', // Use card color from theme
+      borderRadius: 10,
+      padding: 10,
+      marginVertical: 5,
+      elevation: 3, // Shadow for Android
+      shadowColor: '#000', // Shadow for iOS
+      shadowOffset: {width: 0, height: 2},
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      flexDirection: 'row',
+    },
+    historyListItemTextStyle: {
+      color: theme.colors.textDarkGrey, // Use theme colors for text
+      fontSize: 16,
+      marginBottom: 5,
+    },
+    imageStyle: {
+      width: '30%',
+      height: 100,
+      resizeMode: 'contain',
+      borderRadius: 8, // Optional: rounded corners for images
     },
   });
 }
