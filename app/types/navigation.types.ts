@@ -5,6 +5,7 @@ export type RootStackParamList = {
   MainMenu: undefined;
   Query: undefined;
   Result: undefined;
+  // Camera: undefined;
 };
 
 export type WelcomeStackNavigationProp = NativeStackNavigationProp<
@@ -23,3 +24,8 @@ export type ResultStackNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'Result'
 >;
+
+// export type CameraStackNavigationProp = NativeStackNavigationProp<
+//   RootStackParamList,
+//   'Camera'
+// >;

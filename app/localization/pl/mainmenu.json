@@ -1,3 +1,5 @@
 {
-  
+    "queryButton": "Go to query screen",
+    "resultButton": "Go to result screen",
+    "title": "Main Menu"
 }

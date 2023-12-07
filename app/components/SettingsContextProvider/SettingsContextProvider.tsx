@@ -2,12 +2,14 @@ import React, {createContext, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {MMKV} from 'react-native-mmkv';
 import RNFS from 'react-native-fs';
+import {PermissionsAndroid} from 'react-native';
 import {
   Classification,
   ClassificationList,
   SettingsContextProps,
   SettingsContextProviderProps,
 } from './SettingsContextProvider.types';
+import {Camera} from 'react-native-vision-camera';
 
 export const SettingsContext = createContext<SettingsContextProps | null>(null);
 
@@ -40,9 +42,46 @@ export function SettingsContextProvider({
   );
   const {i18n} = useTranslation();
 
+  const requestAppPermissions = async () => {
+    try {
+      const permissions = [
+        PermissionsAndroid.PERMISSIONS.INTERNET,
+        PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+        PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      ];
+
+      for (const permission of permissions) {
+        const granted = await PermissionsAndroid.request(permission);
+        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+          console.log(`Permission denied: ${permission}`);
+        }
+      }
+    } catch (err) {
+      console.warn('Error requesting permissions', err);
+    }
+  };
+
+  const addClassification = (newClassification: Classification) => {
+    const updatedClassifications = [...classifications, newClassification];
+    setClassifications(updatedClassifications);
+    appStorage.set('classifications', JSON.stringify(updatedClassifications));
+  };
+
+  const clearClassifications = () => {
+    setClassifications([]);
+    appStorage.delete('classifications');
+  };
+
   useEffect(() => {
+    console.log('Initializing settings useEffect triggered');
     const initializeSettings = async () => {
       try {
+        // Request app permissions
+        await requestAppPermissions();
+
         // Synchronize language changes with i18n and storage
         await i18n.changeLanguage(language);
         appStorage.set('language', language);
@@ -55,19 +94,28 @@ export function SettingsContextProvider({
       }
     };
 
-    void initializeSettings();
+    initializeSettings().catch(error => {
+      console.error('Unhandled error in initializeSettings:', error);
+    });
+    console.log('Initializing settings useEffect ended');
   }, [language, i18n]);
 
-  const addClassification = (newClassification: Classification) => {
-    const updatedClassifications = [...classifications, newClassification];
-    setClassifications(updatedClassifications);
-    appStorage.set('classifications', JSON.stringify(updatedClassifications));
-  };
+  useEffect(() => {
+    console.log('Requesting camera permission useEffect triggered');
+    const requestCameraPermission = async () => {
+      try {
+        const newCameraPermission = await Camera.requestCameraPermission();
+        console.log(`Camera Permission Status: ${newCameraPermission}`);
+      } catch (error) {
+        console.error('Error requesting camera permission:', error);
+      }
+    };
 
-  const clearClassifications = () => {
-    setClassifications([]);
-    appStorage.delete('classifications');
-  };
+    requestCameraPermission().catch(error => {
+      console.error('Unhandled error in requestCameraPermission:', error);
+    });
+    console.log('Camera permission useEffect ended');
+  }, []);
 
   const value = {
     language,

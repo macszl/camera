@@ -1,12 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, Button, Platform, TouchableOpacity} from 'react-native';
+import {View, Text, Platform, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 import DocumentPicker, {
   DocumentPickerResponse,
 } from 'react-native-document-picker';
 import {
   Camera,
-  useCameraDevices,
   CameraPermissionStatus,
   useCameraDevice,
 } from 'react-native-vision-camera';
@@ -22,15 +21,22 @@ export function QueryScreenContent() {
   const styles = useStyles();
 
   const [showCamera, setShowCamera] = useState(false);
-  const {t} = useTranslation();
+  const {t} = useTranslation('components');
 
-  useEffect(() => {
-    void (async () => {
-      const newCameraPermission: CameraPermissionStatus =
-        await Camera.requestCameraPermission();
-      console.log(newCameraPermission);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   const requestCameraPermission = async () => {
+  //     try {
+  //       const newCameraPermission = await Camera.requestCameraPermission();
+  //       console.log(newCameraPermission);
+  //     } catch (e) {
+  //       console.error('Error requesting camera permission:', e);
+  //     }
+  //   };
+
+  //   requestCameraPermission().catch(e => {
+  //     console.error('Error in requestCameraPermission:', e);
+  //   });
+  // }, []);
 
   const sendPhoto = async () => {
     if (!selectedPickerResponse) {
@@ -111,7 +117,11 @@ export function QueryScreenContent() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.touchableButton} onPress={pickDocument}>
+      <TouchableOpacity
+        style={styles.touchableButton}
+        onPress={() => {
+          return pickDocument;
+        }}>
         <Text style={styles.buttonText}> {t('query.selectFileButton')} </Text>
       </TouchableOpacity>
       <View style={{width: '100%', height: '10%'}}></View>

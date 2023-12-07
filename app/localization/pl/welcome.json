@@ -1,5 +1,5 @@
 {
-  "welcomeMessageHeading" : "Witaj w FoodDetect!",
-  "welcomeMessageDescription" : "Tutaj możesz wybrać zdjęcie z galerii lub zrobić zdjęcie aparatem i wysłać je do klasyfikacji.",
-  "continueButton": "Kontynuuj"
+    "welcomeMessageHeading" : "Witaj w FoodDetect!",
+    "welcomeMessageDescription" : "Tutaj możesz wybrać zdjęcie z galerii lub zrobić zdjęcie aparatem i wysłać je do klasyfikacji.",
+    "continueButton": "Kontynuuj"
 }

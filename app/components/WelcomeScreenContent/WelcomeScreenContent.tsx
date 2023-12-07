@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {Button} from '@rneui/themed';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {WelcomeStackNavigationProp} from '../../types/navigation.types';
@@ -21,6 +20,7 @@ export function WelcomeScreenContent() {
       <TouchableOpacity
         style={styles.touchableButton}
         onPress={() => {
+          console.log('Button pressed');
           return navigation.navigate('MainMenu');
         }}>
         <Text style={styles.buttonText}>{t('welcome.continueButton')}</Text>

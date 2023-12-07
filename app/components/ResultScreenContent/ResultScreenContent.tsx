@@ -8,7 +8,6 @@ export function ResultScreenContent() {
   const styles = useStyles();
   const {t} = useTranslation();
   const settingsContext = useContext(SettingsContext);
-
   //Load classifications from the settingsContext
   if (settingsContext === null) {
     throw new Error('Something went wrong with SettingsContext');
