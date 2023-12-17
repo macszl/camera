@@ -74,5 +74,8 @@ export function useStyles() {
       resizeMode: 'contain',
       borderRadius: 8, // Optional: rounded corners for images
     },
+    camera: {
+      flex: 1,
+    },
   });
 }

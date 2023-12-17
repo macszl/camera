@@ -17,7 +17,7 @@ export function RootNavigator() {
         <Stack.Screen name="Query" component={QueryScreen} />
         <Stack.Screen name="Result" component={ResultScreen} />
         <Stack.Screen name="MainMenu" component={MainMenuScreen} />
-        {/* <Stack.Screen name="Camera" component={CameraScreen} /> */}
+        <Stack.Screen name="Camera" component={CameraScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
