@@ -31,11 +31,7 @@ const getInitialClassifications = async (): Promise<ClassificationList> => {
   }
 
   console.log('Returning initial classifications');
-  return [
-    {image: `${externalDir}/image1.jpeg`, result: 'Egg'},
-    {image: `${externalDir}/image2.jpg`, result: 'Rice'},
-    {image: `${externalDir}/image3.jpg`, result: 'Egg'},
-  ];
+  return [];
 };
 
 export function SettingsContextProvider({
@@ -53,7 +49,7 @@ export function SettingsContextProvider({
     console.log('Requesting app permissions');
     try {
       const permissions = [
-        // PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO, ---- those permissions should be requested for android 13+ versions 
+        // PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO, ---- those permissions should be requested for android 13+ versions
         // PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES, ---- those permissions should be requested for android 13+ versions
         PermissionsAndroid.PERMISSIONS.CAMERA,
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,

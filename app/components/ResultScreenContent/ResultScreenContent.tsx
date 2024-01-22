@@ -14,11 +14,14 @@ export function ResultScreenContent() {
   }
 
   const {classifications} = settingsContext;
+
+  const reversedClassifications = [...classifications].reverse();
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>{t('result.resultWelcomeMessage')}</Text>
       <FlatList
-        data={classifications}
+        data={reversedClassifications}
         renderItem={({item}) => {
           return (
             <View style={styles.historyListItemStyle}>

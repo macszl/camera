@@ -1,5 +1,5 @@
-import React, {useCallback, useState} from 'react';
-import {View, Text, Platform, TouchableOpacity} from 'react-native';
+import React, {useCallback, useContext, useState} from 'react';
+import {View, Text, Platform, TouchableOpacity, Alert} from 'react-native';
 import axios from 'axios';
 import DocumentPicker, {
   DocumentPickerResponse,
@@ -9,14 +9,23 @@ import {useStyles} from '../WelcomeScreenContent/WelcomeScreenContent.styles';
 import {QueryStackNavigationProp} from '../../types/navigation.types';
 import {useNavigation} from '@react-navigation/native';
 import mime from 'mime';
+import {ClassificationResult} from '../../types/classifiedCategory.types';
+import {SettingsContext} from '../SettingsContextProvider/SettingsContextProvider';
 
 export function QueryScreenContent() {
   const [selectedPickerResponse, setSelectedPickerResponse] =
     useState<DocumentPickerResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const styles = useStyles();
   const {t} = useTranslation('components');
   const navigation = useNavigation<QueryStackNavigationProp>();
+
+  const classificationContext = useContext(SettingsContext);
+
+  if (!classificationContext) {
+    throw new Error('Something went wrong with SettingsContext');
+  }
+
+  const {addClassification} = classificationContext;
 
   const sendPhoto = async () => {
     if (
@@ -47,14 +56,25 @@ export function QueryScreenContent() {
     const url = 'https://foodbackend-gno3.onrender.com/api/recognize';
 
     try {
-      const response = await axios.post(url, formData, {
+      const response = await axios.post<ClassificationResult>(url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      console.log('Photo classification response:', response);
-      return response;
+      console.log('Photo classification response:', response.data);
+      if (response.data.classifiedCategory) {
+        const classifiedCategory = response.data.classifiedCategory;
+        addClassification({
+          image: photoUri,
+          result: classifiedCategory,
+        });
+
+        const dataResult = response.data.classifiedCategory;
+        Alert.alert('Success', `Classification result: ${dataResult}`);
+      }
+
+      return response.data;
     } catch (err) {
       console.error('Error sending photo to API:', err);
       if (axios.isAxiosError(err)) {
@@ -69,17 +89,16 @@ export function QueryScreenContent() {
         console.error('To JSON:', err.toJSON());
         console.error('Cause:', err.cause);
       }
-      setError('Error sending photo to API');
+      Alert.alert('Error', 'Error sending photo to API');
     }
   };
 
   const validate = () => {
     if (!selectedPickerResponse) {
-      setError('Please select a file');
+      Alert.alert('Error', 'Please select a file');
       return false;
     }
 
-    setError(null);
     return true;
   };
 
@@ -98,11 +117,9 @@ export function QueryScreenContent() {
         }
       })
       .catch(err => {
-        if (DocumentPicker.isCancel(err)) {
-          setError(null);
-        } else {
+        if (!DocumentPicker.isCancel(err)) {
           console.error('Error picking document:', err);
-          setError('Error picking document');
+          Alert.alert('Error', 'Error picking document');
         }
       });
   }, []);
@@ -115,7 +132,7 @@ export function QueryScreenContent() {
     if (validate()) {
       sendPhoto().catch(err => {
         console.error('Error sending photo to API:', err);
-        setError('Error sending photo to API');
+        Alert.alert('Error', 'Error sending photo to API');
       });
     }
   };
@@ -150,7 +167,6 @@ export function QueryScreenContent() {
         onPress={handleSubmit}>
         <Text style={styles.buttonText}>{t('query.sendFileButton')}</Text>
       </TouchableOpacity>
-      {error && <Text>{error}</Text>}
     </View>
   );
 }
