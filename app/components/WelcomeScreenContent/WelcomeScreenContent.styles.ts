@@ -77,5 +77,30 @@ export function useStyles() {
     camera: {
       flex: 1,
     },
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    spinnerText: {
+      marginTop: 10,
+      color: '#FFFFFF',
+      fontSize: 18,
+    },
+    closeButton: {
+      position: 'absolute',
+      top: 20,
+      right: 20,
+      paddingVertical: 5,
+      paddingHorizontal: 10,
+      backgroundColor: 'rgba(255, 255, 255, 0.05)',
+      borderRadius: 5,
+    },
+    closeButtonText: {
+      color: '#FFFFFF',
+      fontSize: 18,
+      fontWeight: 'bold',
+    },
   });
 }

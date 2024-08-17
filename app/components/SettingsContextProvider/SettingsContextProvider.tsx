@@ -49,27 +49,28 @@ export function SettingsContextProvider({
     console.log('Requesting app permissions');
     try {
       const permissions = [
-        // PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO, ---- those permissions should be requested for android 13+ versions
-        // PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES, ---- those permissions should be requested for android 13+ versions
         PermissionsAndroid.PERMISSIONS.CAMERA,
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
       ];
 
-      for (const permission of permissions) {
-        console.log(`Checkign permissions for: ${permission}`);
-        const currentStatus = await PermissionsAndroid.check(permission);
-        if (currentStatus) {
-          console.log(`Permission already granted: ${permission}`);
-          continue;
-        }
+      // if (Platform.Version >= 33) {
+      //   // Android 13+
+      //   permissions = [
+      //     PermissionsAndroid.PERMISSIONS.CAMERA,
+      //     PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+      //     PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+      //   ];
+      // }
 
-        console.log(`Requesting permission for ${permission}`);
-        const granted = await PermissionsAndroid.request(permission);
-        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-          console.log(`Permission denied: ${permission}`);
+      console.log('Requesting multiple permissions');
+      const granted = await PermissionsAndroid.requestMultiple(permissions);
+
+      for (const [permission, status] of Object.entries(granted)) {
+        if (status === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log(`Permission granted: ${permission}`);
         } else {
-          console.log(`Permission approved: ${permission}`);
+          console.log(`Permission denied: ${permission}`);
         }
       }
     } catch (err) {

@@ -1,5 +1,5 @@
 {
-  "queryButton": "Go to query screen",
-  "resultButton": "Go to result screen",
+  "queryButton": "Classify a new image",
+  "resultButton": "Check results",
   "title": "Main Menu"
 }

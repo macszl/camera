@@ -1,6 +1,14 @@
-import React, {useCallback, useContext, useState} from 'react';
-import {View, Text, Platform, TouchableOpacity, Alert} from 'react-native';
-import axios from 'axios';
+import React, {useCallback, useContext, useRef, useState} from 'react';
+import {
+  View,
+  Text,
+  Platform,
+  TouchableOpacity,
+  Alert,
+  Modal,
+  ActivityIndicator,
+} from 'react-native';
+import axios, {CancelTokenSource} from 'axios';
 import DocumentPicker, {
   DocumentPickerResponse,
 } from 'react-native-document-picker';
@@ -16,10 +24,13 @@ export function QueryScreenContent() {
   const [selectedPickerResponse, setSelectedPickerResponse] =
     useState<DocumentPickerResponse | null>(null);
   const styles = useStyles();
+  const [loading, setLoading] = useState(false);
   const {t} = useTranslation('components');
   const navigation = useNavigation<QueryStackNavigationProp>();
 
   const classificationContext = useContext(SettingsContext);
+
+  const cancelTokenRef = useRef<CancelTokenSource | null>(null); // Use useRef for the cancel token
 
   if (!classificationContext) {
     throw new Error('Something went wrong with SettingsContext');
@@ -56,13 +67,17 @@ export function QueryScreenContent() {
     const url = 'https://foodbackend-gno3.onrender.com/api/recognize';
 
     try {
+      setLoading(true);
+
+      cancelTokenRef.current = axios.CancelToken.source(); // Initialize the cancel token
+
       const response = await axios.post<ClassificationResult>(url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        cancelToken: cancelTokenRef.current.token,
       });
 
-      console.log('Photo classification response:', response.data);
       if (response.data.classifiedCategory) {
         const classifiedCategory = response.data.classifiedCategory;
         addClassification({
@@ -76,20 +91,27 @@ export function QueryScreenContent() {
 
       return response.data;
     } catch (err) {
-      console.error('Error sending photo to API:', err);
-      if (axios.isAxiosError(err)) {
-        console.error('AxiosError Details:');
-        console.error('Message:', err.message);
-        console.error('Code:', err.code);
-        console.error('Config:', err.config);
-        console.error('Request:', err.request);
-        console.error('Response:', err.response);
-        console.error('Is Axios Error:', err.isAxiosError);
-        console.error('Status:', err.status);
-        console.error('To JSON:', err.toJSON());
-        console.error('Cause:', err.cause);
+      if (axios.isCancel(err)) {
+        console.log('Request canceled:', err.message); // Handle request cancellation
+      } else {
+        console.error('Error sending photo to API:', err);
+        if (axios.isAxiosError(err)) {
+          console.error('AxiosError Details:');
+          console.error('Message:', err.message);
+          console.error('Code:', err.code);
+          console.error('Config:', err.config);
+          console.error('Request:', err.request);
+          console.error('Response:', err.response);
+          console.error('Is Axios Error:', err.isAxiosError);
+          console.error('Status:', err.status);
+          console.error('To JSON:', err.toJSON());
+          console.error('Cause:', err.cause);
+        }
+        Alert.alert('Error', 'Error sending photo to API');
       }
-      Alert.alert('Error', 'Error sending photo to API');
+    } finally {
+      setLoading(false);
+      cancelTokenRef.current = null;
     }
   };
 
@@ -126,6 +148,13 @@ export function QueryScreenContent() {
 
   const openCamera = () => {
     navigation.navigate('Camera');
+  };
+
+  const closeModal = () => {
+    if (cancelTokenRef.current) {
+      cancelTokenRef.current.cancel('User closed the modal, request canceled'); // Cancel the request
+    }
+    setLoading(false);
   };
 
   const handleSubmit = () => {
@@ -167,6 +196,20 @@ export function QueryScreenContent() {
         onPress={handleSubmit}>
         <Text style={styles.buttonText}>{t('query.sendFileButton')}</Text>
       </TouchableOpacity>
+
+      <Modal
+        transparent={true}
+        animationType="fade"
+        visible={loading}
+        onRequestClose={closeModal}>
+        <View style={styles.modalContainer}>
+          <ActivityIndicator size="large" color="#00FF00" />
+          <Text style={styles.spinnerText}>Loading...</Text>
+          <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+            <Text style={styles.closeButtonText}>x</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   );
 }
