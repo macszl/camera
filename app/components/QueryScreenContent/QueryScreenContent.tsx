@@ -64,7 +64,8 @@ export function QueryScreenContent() {
     });
 
     console.log('FormData: ', formData);
-    const url = 'https://foodbackend-gno3.onrender.com/api/recognize';
+    const url =
+      'http://food-backend-macszl.francecentral.azurecontainer.io/api/recognize';
 
     try {
       setLoading(true);
