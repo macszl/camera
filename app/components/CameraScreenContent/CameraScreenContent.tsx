@@ -16,6 +16,7 @@ export function CameraScreenContent() {
   const {t} = useTranslation();
   const settingsContext = useContext(SettingsContext);
   const [initialising, setInitialising] = useState<boolean>(true);
+  const debugMode = false;
 
   //Load classifications from the settingsContext
   if (settingsContext === null) {
@@ -34,7 +35,9 @@ export function CameraScreenContent() {
       await CameraRoll.save(uri, {type: 'photo'});
       Alert.alert('Photo saved', 'Photo has been saved to your camera roll.');
     } catch (error) {
-      console.error('Error saving photo:', error);
+      if (debugMode) {
+        console.error('Error saving photo:', error);
+      }
       Alert.alert('Error', 'Failed to save photo.');
     }
     console.log('save photo button press went through');
@@ -96,7 +99,9 @@ export function CameraScreenContent() {
 
   const onError = useCallback((error: CameraRuntimeError) => {
     console.log('Camera error!');
-    console.error(error);
+    if (debugMode) {
+      console.error(error);
+    }
   }, []);
 
   const onCameraInitialized = useCallback(() => {

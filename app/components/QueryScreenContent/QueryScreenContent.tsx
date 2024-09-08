@@ -27,7 +27,7 @@ export function QueryScreenContent() {
   const [loading, setLoading] = useState(false);
   const {t} = useTranslation('components');
   const navigation = useNavigation<QueryStackNavigationProp>();
-
+  const debugMode = false;
   const classificationContext = useContext(SettingsContext);
 
   const cancelTokenRef = useRef<CancelTokenSource | null>(null); // Use useRef for the cancel token
@@ -95,18 +95,20 @@ export function QueryScreenContent() {
       if (axios.isCancel(err)) {
         console.log('Request canceled:', err.message); // Handle request cancellation
       } else {
-        console.error('Error sending photo to API:', err);
-        if (axios.isAxiosError(err)) {
-          console.error('AxiosError Details:');
-          console.error('Message:', err.message);
-          console.error('Code:', err.code);
-          console.error('Config:', err.config);
-          console.error('Request:', err.request);
-          console.error('Response:', err.response);
-          console.error('Is Axios Error:', err.isAxiosError);
-          console.error('Status:', err.status);
-          console.error('To JSON:', err.toJSON());
-          console.error('Cause:', err.cause);
+        if (debugMode) {
+          console.error('Error sending photo to API:', err);
+          if (axios.isAxiosError(err)) {
+            console.error('AxiosError Details:');
+            console.error('Message:', err.message);
+            console.error('Code:', err.code);
+            console.error('Config:', err.config);
+            console.error('Request:', err.request);
+            console.error('Response:', err.response);
+            console.error('Is Axios Error:', err.isAxiosError);
+            console.error('Status:', err.status);
+            console.error('To JSON:', err.toJSON());
+            console.error('Cause:', err.cause);
+          }
         }
         Alert.alert('Error', 'Error sending photo to API');
       }
@@ -141,7 +143,9 @@ export function QueryScreenContent() {
       })
       .catch(err => {
         if (!DocumentPicker.isCancel(err)) {
-          console.error('Error picking document:', err);
+          if (debugMode) {
+            console.error('Error picking document:', err);
+          }
           Alert.alert('Error', 'Error picking document');
         }
       });
@@ -161,7 +165,9 @@ export function QueryScreenContent() {
   const handleSubmit = () => {
     if (validate()) {
       sendPhoto().catch(err => {
-        console.error('Error sending photo to API:', err);
+        if (debugMode) {
+          console.error('Error sending photo to API:', err);
+        }
         Alert.alert('Error', 'Error sending photo to API');
       });
     }
